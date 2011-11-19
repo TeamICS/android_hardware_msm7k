@@ -180,6 +180,8 @@ private:
         virtual String8     getParameters(const String8& keys);
                 uint32_t    devices() { return mDevices; }
         virtual status_t    getRenderPosition(uint32_t *dspFrames);
+        virtual status_t    addAudioEffect(effect_handle_t effect){return INVALID_OPERATION;}
+        virtual status_t    removeAudioEffect(effect_handle_t effect){return INVALID_OPERATION;}
 
     private:
                 AudioHardware* mHardware;
@@ -219,6 +221,8 @@ private:
         virtual unsigned int  getInputFramesLost() const { return 0; }
                 uint32_t    devices() { return mDevices; }
                 int         state() const { return mState; }
+        virtual status_t    addAudioEffect(effect_handle_t effect){return INVALID_OPERATION;}
+        virtual status_t    removeAudioEffect(effect_handle_t effect){return INVALID_OPERATION;}
 
     private:
                 AudioHardware* mHardware;
