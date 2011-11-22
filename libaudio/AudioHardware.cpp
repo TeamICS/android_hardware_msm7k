@@ -16,7 +16,7 @@
 
 #include <math.h>
 
-//#define LOG_NDEBUG 0
+#define LOG_NDEBUG 0
 #define LOG_TAG "AudioHardwareMSM72XX"
 #include <utils/Log.h>
 #include <utils/String8.h>
@@ -160,16 +160,15 @@ AudioStreamOut* AudioHardware::openOutputStream(
     { // scope for the lock
         android::Mutex::Autolock lock(mLock);
 
-        // only one output stream allowed
+        AudioStreamOutMSM72xx* out;
         if (mOutput) {
-            if (status) {
-                *status = INVALID_OPERATION;
-            }
-            return 0;
+            // only one output stream allowed
+            out = mOutput;
+        } else {
+            //create new output stream
+            out = new AudioStreamOutMSM72xx();
         }
 
-        // create new output stream
-        AudioStreamOutMSM72xx* out = new AudioStreamOutMSM72xx();
         status_t lStatus = out->set(this, devices, format, channels, sampleRate);
         if (status) {
             *status = lStatus;
